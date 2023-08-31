@@ -137,6 +137,7 @@ class ItesoData extends StatefulWidget {
 class _ItesoDataState extends State<ItesoData> {
   int likesCount = 0;
   bool _isBlack = true;
+  bool _isBlack2 = true;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -155,6 +156,20 @@ class _ItesoDataState extends State<ItesoData> {
                   setState(() {
                     likesCount++;
                     _isBlack = !_isBlack;
+                  });
+                },
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.thumb_down, 
+                  color:_isBlack2?Colors.black:Colors.indigoAccent
+                ),
+                onPressed: () {
+                  setState(() {
+                    if(likesCount > 0) {
+                      likesCount--;
+                      _isBlack2 = !_isBlack2;
+                    }
                   });
                 },
               ),
