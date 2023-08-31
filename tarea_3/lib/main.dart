@@ -10,19 +10,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.green,
-          title: const Center(child: Text('Tip Calculator')),
+          title: const Center(child: Text('Tip Calculator'))
         ),
-        body: const Column(
-          children: [
-            CostInput(),
-            TipInput(),
-            TipRounder(),
-            CalculateTip()
-          ],
-        )
+        body: const TipCalculator(),
       ),
     );
   }

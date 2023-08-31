@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
 
-class CostInput extends StatefulWidget {
-  const CostInput({super.key});
+class TipCalculator extends StatefulWidget {
+  const TipCalculator({super.key});
 
   @override
-  State<CostInput> createState() => _CostInputState();
+  State<TipCalculator> createState() => _TipCalculatorState();
 }
 
-class _CostInputState extends State<CostInput> {
-  
-  final _costController = TextEditingController();
+class _TipCalculatorState extends State<TipCalculator> {
 
-  TextEditingController get costController => _costController;
+  var _costController = TextEditingController();
+  double _selectedValue = 0.15;
+  bool _round = false;
+  double _tipAmount = 0.0;
 
-  @override
-  void dispose() {
-    _costController.dispose();
-    super.dispose();
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15, left: 20),
-      child: Row(
+      padding: const EdgeInsets.only(top: 15, left: 20), 
+      child: Column(children: [
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const Icon(Icons.room_service, color: Colors.green,),
@@ -32,109 +28,72 @@ class _CostInputState extends State<CostInput> {
               child: SizedBox(
                 width: 250,
                 child: TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Cost of Service',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: false),
-                controller: _costController,
+                  controller: _costController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Cost of Service',
+                    border: OutlineInputBorder(),
+                  ),
                 )
               ),
             ),
             const Spacer()
           ],
         ),
-    );
-  }
-}
-
-class TipInput extends StatefulWidget {
-  const TipInput({super.key});
-
-  @override
-  State<TipInput> createState() => _TipInputState();
-}
-
-class _TipInputState extends State<TipInput> {
-  double _selectedValue = 0.15; // Initialize with a default value
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const Padding(
-          padding:  EdgeInsets.only(top: 35, left: 20),
-          child: Row(
-            children: [
-              Icon(Icons.food_bank, color: Colors.green,),
-              Padding(
-                padding:  EdgeInsets.only(left: 20),
-                child: Text(
-                  "How good was the service?",
-                  style: TextStyle(fontSize: 17),
-                ),
-              ),
-            ],
-          ),
-        ),
         Padding(
-          padding: const EdgeInsets.only(top: 10, left: 40),
+          padding: const EdgeInsets.only(top: 25),
           child: Column(
-            children: <Widget>[
-              RadioListTile(
-                title: const Text('Excellent (20%)'),
-                value: 0.20,
-                groupValue: _selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedValue = 0.20;
-                  });
-                },
-              ),
-              RadioListTile(
-                title: const Text('Good (18%)'),
-                value: 0.18,
-                groupValue: _selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedValue = 0.18;
-                  });
-                },
-              ),
-              RadioListTile(
-                title: const Text('Okay ()'),
-                value: 0.15,
-                groupValue: _selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedValue = 0.15;
-                  });
-                },
-              ),
-              // Add more RadioListTile options here...
-            ],
-          ),
+              children: <Widget>[
+            const Row(
+              children: [
+                Icon(Icons.food_bank, color: Colors.green,),
+                Padding(
+                  padding:  EdgeInsets.only(left: 20),
+                  child: Text(
+                    "How good was the service?",
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
+              ],
+            ), Column(
+              children: <Widget>[
+                RadioListTile(
+                  title: const Text('Excellent (20%)'),
+                  value: 0.20,
+                  groupValue: _selectedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedValue = 0.20;
+                    });
+                  },
+                ),
+                RadioListTile(
+                  title: const Text('Good (18%)'),
+                  value: 0.18,
+                  groupValue: _selectedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedValue = 0.18;
+                    });
+                  },
+                ),
+                RadioListTile(
+                  title: const Text('Okay (15%)'),
+                  value: 0.15,
+                  groupValue: _selectedValue,
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedValue = 0.15;
+                    });
+                  },
+                ),
+                // Add more RadioListTile options here...
+              ],
+            ),
+              ],
+            ),
         ),
-      ],
-    );
-  }
-}
-
-class TipRounder extends StatefulWidget {
-  const TipRounder({super.key});
-
-  @override
-  State<TipRounder> createState() => _TipRounderState();
-}
-
-class _TipRounderState extends State<TipRounder> {
-  bool _round = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-          padding: const EdgeInsets.only(top: 10, left: 20, right: 20), 
-          child:  Row(
+        Row(
             children: [
               const Icon(Icons.money, color: Colors.green,),
               const Padding(
@@ -156,24 +115,8 @@ class _TipRounderState extends State<TipRounder> {
                 activeColor: Colors.green,
               )
             ],
-          )
-        );
-  }
-}
-
-class CalculateTip extends StatefulWidget {
-  const CalculateTip({super.key});
-
-  @override
-  State<CalculateTip> createState() => _CalculateTipState();
-}
-
-class _CalculateTipState extends State<CalculateTip> {
-  double _tipAmount = 0.0;
-  
-  @override
-  Widget build(BuildContext context) {
-    return Column(
+          ),
+        Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
@@ -186,7 +129,11 @@ class _CalculateTipState extends State<CalculateTip> {
               ),
               onPressed: () {
                 setState(() {
-                  _tipAmount = 0.0;
+                  if(_round){
+                    _tipAmount = (double.parse(_costController.text) * _selectedValue).ceilToDouble();
+                  } else {
+                    _tipAmount = double.parse(_costController.text) * _selectedValue;
+                  }
                 });
               }, 
               child: const Text('Calculate Tip')
@@ -203,6 +150,10 @@ class _CalculateTipState extends State<CalculateTip> {
           ],
         )
       ],
+    )
+      ],
+      
+      )
     );
   }
 }
