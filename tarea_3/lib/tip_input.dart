@@ -119,7 +119,7 @@ class _TipCalculatorState extends State<TipCalculator> {
         Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
+          padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
           child: SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -129,10 +129,20 @@ class _TipCalculatorState extends State<TipCalculator> {
               ),
               onPressed: () {
                 setState(() {
-                  if(_round){
-                    _tipAmount = (double.parse(_costController.text) * _selectedValue).ceilToDouble();
+                  if(_costController.text.isNotEmpty){
+                    if(_round){
+                      _tipAmount = double.parse(((double.parse(_costController.text) * _selectedValue).ceilToDouble()).toStringAsFixed(2));
+                    } else {
+                      _tipAmount = double.parse(((double.parse(_costController.text) * _selectedValue)).toStringAsFixed(2));
+                    }
                   } else {
-                    _tipAmount = double.parse(_costController.text) * _selectedValue;
+                    showDialog <String>(
+                      context: context, 
+                      builder: (BuildContext context) => const AlertDialog(
+                        title: Text('Error'),
+                        content: Text('Please enter a cost of service.')
+                      ),
+                    );
                   }
                 });
               }, 
