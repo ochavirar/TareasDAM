@@ -1,4 +1,5 @@
 import 'package:desafio_de_4/Providers/dark_theme_provider.dart';
+import 'package:desafio_de_4/Screens/networking_sample.dart';
 import 'package:desafio_de_4/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +54,24 @@ class MainScreen extends StatelessWidget {
         title: const Text('Desafio de 4'),
       ),
       body: const Center(
-        child: Text('Desafio de 4'),
+        child: Padding(padding: EdgeInsets.all(40.0), 
+        child: Column(
+          children: [
+            Text("Bienvenido a la app de ejemplo de flutter",
+              style: TextStyle(
+                fontSize: 20, 
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            Divider(),
+            Text("Esta app es un ejemplo de como se puede hacer un tema oscuro en flutter, networking, navegación y manejo de estados",
+              style: TextStyle(
+                fontSize: 15, 
+                fontWeight: FontWeight.normal
+              ),
+            ),
+          ],
+        ))
       ),
       drawer: const DrawerContainer(),
     );
@@ -65,15 +83,24 @@ class DrawerContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
-    bool valueTheme = false;
     return Drawer(
         child: ListView(
           children: <Widget>[
-            const DrawerHeader(child: Text('Desafio de 4')),
+            const DrawerHeader(
+              child: Center(
+                child: Text(
+                  'Desafio de 4',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                  )
+                )
+              )
+            ),
             ListTile(
-              title: const Text('Item 1'),
+              title: const Text('Networking en acción'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const NetworkingTransformer()));
               },
             ),
             ListTile(
@@ -93,7 +120,6 @@ class DrawerContainer extends StatelessWidget {
               title: const Text('Dark Theme'),
               value: themeChange.darkTheme,
               onChanged: (bool value) {
-                valueTheme = value;
                 themeChange.darkTheme = value;
               },
             ),
