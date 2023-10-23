@@ -98,6 +98,12 @@ class DrawerContainer extends StatelessWidget {
               )
             ),
             ListTile(
+              title: const Text('Página principal'),
+              onTap: () {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+              },
+            ),
+            ListTile(
               title: const Text('Networking en acción'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const NetworkingTransformer()));
