@@ -1,4 +1,6 @@
 import 'package:desafio_de_4/Providers/dark_theme_provider.dart';
+import 'package:desafio_de_4/Providers/profile_provider.dart';
+import 'package:desafio_de_4/Screens/change_profile_screen.dart';
 import 'package:desafio_de_4/Screens/networking_sample.dart';
 import 'package:desafio_de_4/styles.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +72,18 @@ class MainScreen extends StatelessWidget {
                 fontWeight: FontWeight.normal
               ),
             ),
+            Divider(),
+            Spacer(),
+            Divider(),
+            Text("Datos actuales del usuario, puedes modificarlos en la opción 'Cambia los datos de tu perfil'",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.normal
+            ),),
+            Spacer(),
+            ProfileDataDisplay(),
+            Spacer(),
+            Spacer()
           ],
         ))
       ),
@@ -79,10 +93,13 @@ class MainScreen extends StatelessWidget {
 }
 
 class DrawerContainer extends StatelessWidget {
+
+
   const DrawerContainer({super.key});
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    
     return Drawer(
         child: ListView(
           children: <Widget>[
@@ -100,7 +117,7 @@ class DrawerContainer extends StatelessWidget {
             ListTile(
               title: const Text('Página principal'),
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
               },
             ),
             ListTile(
@@ -110,15 +127,9 @@ class DrawerContainer extends StatelessWidget {
               },
             ),
             ListTile(
-              title: const Text('Item 2'),
+              title: const Text('Cambia los datos de tu perfil'),
               onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Item 3'),
-              onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileChanger()));
               },
             ),
             const Divider(),
@@ -132,5 +143,42 @@ class DrawerContainer extends StatelessWidget {
           ],
         )
       );
+  }
+}
+
+class ProfileDataDisplay extends StatelessWidget {
+  const ProfileDataDisplay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController nameController = TextEditingController(text: context.watch<ProfileProvider>().name.toString());
+    TextEditingController roleController = TextEditingController(text: context.watch<ProfileProvider>().role.toString());
+    TextEditingController emailController = TextEditingController(text: context.watch<ProfileProvider>().email.toString());
+  
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("Nombre: ${nameController.text}",
+          style: const TextStyle(
+            fontSize: 20, 
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        const Divider(),
+        Text("Rol: ${roleController.text}",
+          style: const TextStyle(
+            fontSize: 20, 
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        const Divider(),
+        Text("email: ${emailController.text}",
+          style: const TextStyle(
+            fontSize: 20, 
+            fontWeight: FontWeight.bold
+          ),
+        ),
+      ],
+    );
   }
 }
